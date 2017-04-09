@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="css/buylist.css"/>
+		
+		
+	</head>
+	<body>
+		<div id="top">
+			<div class="content_width"><!--content_width表示整体内容区域宽度-->
+				<div class="top_left left">
+					<span style="margin-right: 8px;">送货至</span>
+					<span id="usersProvince">芜湖</span>					
+					<img src="img/jiantou.png" style="margin: 0 1px 0 3px;"/>
+					<div class="city">
+						<span>A:<a href="#">安徽</a></span><br />
+						<span>B:<a href="#">北京</a></span><br />
+						<span>C:<a href="#">重庆</a></span>
+					</div>
+				</div>
+				<div class="top_right right">
+					<ul>
+						<li id="person"><!--<a href="login.html" style="color: #DD0000;">请登录</a> <a href="register.html">注册</a>--></li>
+						<li><a href="#">我的订单</a></li>
+						<li id="my1yao">
+							<a href="#">我的师大购物</a>
+							<img src="img/jiantou.png"/>
+							<div id="my1yao_plus">
+								<ul>
+									<li><a href="#">我的优惠券</a></li>
+									<li><a href="#">我的收藏夹</a></li>
+									<li><a href="#">商品评价</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a href="#">帮助中心</a></li>
+						<li style="color: #D4A774;font-weight: 700;">400-007-0958</li>
+						<li style="padding: 0 0 0 10px;" class="apppart">
+							<img src="img/phone.PNG" style="margin-right:8px;"/><a href="#">手机APP</a>
+							<div class="apppart_plus">
+								<ul>
+									<li>
+										<img src="img/2DCodenew.png" style="margin-left: -10px;"/>
+										<a href="#">1药网客户端</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="head">
+			<div class="content_width">
+				<!--壹药网logo-->
+				<div class="logo left">
+					<a href="index.html"><img src="img/logo.png" style="margin-top: 26px;"/></a>
+				</div>
+				
+					<img src="img/000001.png" class="linshi1"/>
+				
+				<!--clear清除左右浮动-->
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="content_width">	
+			<div id="cartList">
+				<ul class="cartHead">
+					<li style="padding: 0 75px;">商品信息</li>
+					<li>单价</li>
+					<li>数量</li>
+					<li>小计</li>
+					<li>操作</li>
+				</ul>				
+				<div class="blank">
+					你的购物车空空如也~
+				</div>				
+			</div>
+			<div id="all_total">
+				<ul>
+					<li id="empty"><a href="javascript:;">清空购物车</a></li>
+					<li><span>运费：250</span></li>
+					<li><span>商品总价 ￥ </span><span id="total_price">0.00</span></li>
+					<li style="width: 260px;">
+						<span class="sp_box1">继续购物</span>
+						<span class="sp_box2">付款</span>
+					</li>
+				</ul>
+			</div>
+		</div>		
+		<div id="bottom">
+			<div class="content_width">
+				<a href="#">1药网网上药店</a>
+				<span>，国家药监局认证通过的合法网上药店，中国医药电子商务行业的开拓者领跑者。</span>
+				<a href="#">粤ICP备12015869号-1</a><br />				
+				<span>公司名称：广东壹号大药房连锁有限公司 公司地址：广东省广州市越秀区共和西路1号2层 联系电话：020-31067218</span><br />
+				<span class="b_b">Copyright (C) 2010-2015 1药网版权所有</span>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function (){
+			// 取出在cookie中存的购物车信息
+			var cartStr = $.cookie("cart") ? $.cookie("cart") : "";
+			function aa(){
+				$(".blank").css({display : "block"});
+			}
+			if(!cartStr){
+				aa();
+			} else {
+				var cartObj = convertCartStrToObj(cartStr);
+				// 遍历所有的商品，生成html添加到购物车列表中去	
+				for(var id in cartObj){
+					// 商品信息对象
+					var good = cartObj[id];			
+					var str = '<ul class="goodInfo" data-good-id="' + id + '">' + 
+						'<li><img src="' + good.src + '"></li>' + 
+						'<li>' + good.name + '</li>' + 
+						'<li>' +'￥' +good.price + '</li>' + 
+						'<li class="num">' + 
+							'<a href="javascript:;" class="minus">-</a>' +
+							' <input type="text" value="' + good.num + '" /> ' +
+							'<a href="javascript:;" class="plus">+</a>' + 
+						'</li>' +
+						'<li class="total">' + good.num * good.price + '</li>' +
+						'<li><a href="javascript:;" class="del">删除</a></li>' +
+					'</ul>';						
+					// 将上面的结构添加到cartList中去
+					$(str).appendTo("#cartList");												
+				}
+				function heji(){
+					var alltotal=0;
+					$('#cartList .total').each(function(){							
+						
+						alltotal+=parseInt($(this).html());
+					});
+					console.log(alltotal);
+					$('#total_price').html(alltotal);
+				}
+				heji();
+				
+				console.log($('#total_price').html());
+				// 给每个商品添加从购物车删除的事件
+				$('.goodInfo a.del').click(function (){						
+					// 在页面上将商品信息删除，顺便获取一下该商品的id
+					var id = $(this).parents('.goodInfo').remove().attr("data-good-id");
+					// 从cookie中将该商品删除
+					var cartStr = $.cookie("cart") ? $.cookie("cart") : "";
+					var cartObj = convertCartStrToObj(cartStr);
+					delete cartObj[id];						
+					// 将新的商品信息放回cookie
+					$.cookie('cart', convertObjToCartStr(cartObj), {expires:7, path:"/"});
+					if($('.goodInfo').length==0){
+						aa();
+					}
+					heji();
+				});
+				console.log($('.goodInfo').length)
+				// 给增加按钮添加事件
+				$(".goodInfo a.plus").click(function (){
+					
+					var id = $(this).parents('.goodInfo').attr("data-good-id");
+					var cartStr = $.cookie("cart") ? $.cookie("cart") : "";
+					var cartObj = convertCartStrToObj(cartStr);
+					cartObj[id].num += 1;
+					// 将页面上显示的数量加1
+					$(this).siblings("input").val("" + cartObj[id].num);
+					// 更新页面上的小计
+					$(this).parent().siblings('.total').html(cartObj[id].num * cartObj[id].price + "");
+					// 将信息放回cookie
+					$.cookie('cart', convertObjToCartStr(cartObj), {expires:7, path:"/"});
+					heji();
+				});
+				
+				// 给减按钮添加点击事件
+				$(".goodInfo a.minus").click(function (){
+					
+					var id = $(this).parents('.goodInfo').attr("data-good-id");
+					var cartStr = $.cookie("cart") ? $.cookie("cart") : "";
+					var cartObj = convertCartStrToObj(cartStr);
+					if (cartObj[id].num > 1){ // 商品数量减少不能少于1
+						cartObj[id].num -= 1;
+					
+						$(this).siblings("input").val("" + cartObj[id].num);
+						$(this).parent().siblings('.total').html(cartObj[id].num * cartObj[id].price + "");
+						$.cookie('cart', convertObjToCartStr(cartObj), {expires:7, path:"/"});
+					}
+					heji();
+				});
+				
+				// 改数量的input绑定一个blur事件
+				$(".goodInfo li.num input").blur(function (){
+					var id = $(this).parents('.goodInfo').attr("data-good-id");
+					var cartStr = $.cookie("cart") ? $.cookie("cart") : "";
+					var cartObj = convertCartStrToObj(cartStr);
+					// 判断用户输入是否合法
+					var pattern = /^\d+$/;
+					if(!pattern.test($(this).val())){
+						cartObj[id].num = 1;
+						$(this).val("1");
+					} else {
+						// 修改一下数量
+						cartObj[id].num = parseInt($(this).val());
+					}
+					$(this).siblings("input").val("" + cartObj[id].num);
+					$(this).parent().siblings('.total').html(cartObj[id].num * cartObj[id].price + "");
+					$.cookie('cart', convertObjToCartStr(cartObj), {expires:7, path:"/"});
+				});
+			}
+			$('.sp_box1').click(function(){
+				window.location='detail.html';
+			});
+		});
+		
+		function convertCartStrToObj(cartStr){
+			// 如果是空字符串，即没有购物车信息，那么购物车为空，直接返回一个空对象
+			if(!cartStr){
+				return {};
+			}
+			// "sp1,香蕉,30,1,src1:sp2,苹果,40,2,src2:sp3,梨,50,3,src3"
+			var goods = cartStr.split(":");
+			var obj = {};
+			for(var i = 0 ; i < goods.length; i++){
+				var data = goods[i].split(",");
+				// 以商品的id为键，商品的其他信息为值, 这个值也设计为一个对象
+				obj[data[0]] = {
+					name : data[1],
+					price : parseFloat(data[2]),
+					num : parseInt(data[3]),
+					src : data[4]
+				};
+			}				
+			return obj;
+		}			
+		function convertObjToCartStr(obj){
+				var cartStr = "";
+				for(var id in obj){
+					if(cartStr){
+						cartStr += ":";
+					}
+					cartStr += id + "," + obj[id].name + "," + obj[id].price + "," + obj[id].num + "," + obj[id].src;
+				}					
+				return cartStr;
+		}
+	</script>
+</html>

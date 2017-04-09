@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>用户注册</title>
+		<link rel="stylesheet" type="text/css" href="css/register.css"/>	
+	</head>
+	<body>
+		<!--Logo部分-->
+		<div id="head">
+			<div class="content_width">
+				<a href="index.html"><img src="img/yao_logo.png"/></a>
+			</div>
+		</div>
+		<!--登录框部分-->
+		<div id="container">
+			<div class="content_width">
+				<div class="log_tt">
+					<span>Hi , 欢迎注册 !</span>
+					<span class="log_tt_r">
+						我已经注册，现在就<a href="login.html">登录</a>
+					</span>
+				</div>
+				<!--登录-->
+				<div class="registered">
+					<!--输入手机号-->
+					<div class="content_1">
+						<input type="" name="username" id="username" placeholder="手机号" />
+						<span class="t1">手机号格式不正确</span>
+						<img src="img/regest_1.png" class="img1"/>
+						<img src="img/regest_2.png" class="img2"/>
+					</div>
+					<!--设置密码-->
+					<div class="content_2">
+						<input type="" name="password" id="password" placeholder="登录密码" />
+						<span class="t2">请输入至少6位密码</span>
+						<img src="img/regest_1.png" class="img1"/>
+					</div>
+					<!--确认密码-->
+					<div class="content_3">
+						<input type="" name="conPwd" id="conPwd" placeholder="确认密码"/>
+						<span class="t3">密码不一致</span>
+					</div>
+					<div class="reg">
+						<label class="checkbox">
+							<input type="checkbox" name="" id="cBox" value="" checked="checked"/>
+							<span>我已阅读并同意<a href="#">《师大购物服务协议》</a></span>
+						</label>
+						<button id="regButton">立即注册</button>
+					</div>
+					<div class="hzFriend">
+						<p>使用合作伙伴帐号登录：</p>
+						<ul>
+							<li class="hz1"><a href="#"></a></li>
+							<li class="hz2"><a href="#"></a></li>
+							<li class="hz3"><a href="#"></a></li>
+							<li class="hz4"><a href="#"></a></li>
+							<li class="hz5"><a href="#"></a></li>
+							<li class="hz6"><a href="#"></a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div id="footer">
+			<div class="content_width">			
+				<p>
+					<a href="#" >关于师大购物网</a>|
+					<a href="http://#">互联网药品交易资格证</a>|
+					<a href="#">互联网药品信息服务资格证</a>|
+				</p>
+				<p>
+					<a href="#">连锁营业执照</a>|
+					<a href="#">保健食品卫生许可证</a>|
+					<a href="#" target="_blank">医疗器械许可证</a>|
+					<a href="#"  target="_blank">食品流通许可证</a>|
+					<a href="#"	target="_blank">GSP证书</a>|
+					<a href="#">粤ICP备12015869号</a>
+				</p>
+				<p>
+					Copyright&copy; 师大购物网 2010-2015， All Rights Reserved
+				</p>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(function (){
+		//添加判断变量
+		var ok1=false;
+		var ok2=false;
+		var ok3=false;
+		// 获取到用户输入的用户名和密码
+		//var usn = $('#username').val();
+		//var pwd = $("#password").val();
+		//var con = $("#conPwd").val();
+		//var mobile=/^1((3[0-9]|4[57]|5[0-35-9]|7[0678]|8[0-9])\d{8}$)/g;
+		$('.content_1 span').hide();
+		$('.content_2 span').hide();
+		$('.content_3 span').hide();
+		$('.img1').hide();
+		$('.img2').hide();
+		//手机号-------------------------------------------------------------------
+		//光标移进，不显示提示
+		$('#username').focus(function(){
+			$('.content_1 .t1').hide();
+			$('#username').css({border:'1px solid #0083CE'})
+			$('.content_1 .img1').hide();
+			$('.content_1 .img2').hide();
+		});
+		//光标移除，显示验证手机号，若有错误，显示提示并且改变边框颜色
+		$('#username').blur(function(){
+			//获取手机号
+			var usn = $('#username').val();
+			//判断手机号的正则
+			var mobile=/^1((3[0-9]|4[57]|5[0-35-9]|7[0678]|8[0-9])\d{8}$)/g;
+			if(!mobile.test(usn)){
+				$('.content_1 .t1').show();
+				$('#username').css({border:'1px solid #ffaa00'})
+				$('.content_1 .img2').show();
+				ok1=false;
+			}else{
+				$('.content_1 .img1').show();
+				$('.content_1 .img2').hide();
+				ok1=true;
+			}
+		});
+		//密码-----------------------------------------------------------------------
+		$('#password').focus(function(){
+			$('.content_2 .t2').hide();
+			$('#password').css({border:'1px solid #0083CE'})
+			$('.content_2 .img1').hide();
+		});
+		//光标移除，若有错误，显示提示并且改变边框颜色
+		$('#password').blur(function(){
+			//获取密码
+			var pwd = $('#password').val();
+			var con = $("#conPwd").val();
+			//密码为空
+			if(pwd==""||pwd.length<6){
+				$('.content_2 .t2').show();
+				$('#password').css({border:'1px solid #ffaa00'})
+				ok2=false;
+			}else{
+				$('.content_2 .img1').show();
+				ok2=true;
+			}
+			//【密码】框的内容跟【确认密码】框的对比
+			if(con){
+				if(pwd !== con){
+					$('.content_3 .t3').show();
+					$('#conPwd').css({border:'1px solid #ffaa00'})
+					ok3=false;
+				}else{
+					$('.content_3 .t3').hide();
+					$('#conPwd').css({border:'1px solid #0083CE'})
+					ok3=true;
+				}
+			}			
+		});
+		//确认密码--------------------------------------------------------------------
+		$('#conPwd').focus(function(){
+			$('.content_3 .t3').hide();
+			$('#conPwd').css({border:'1px solid #0083CE'})
+		});
+		//光标移除，显示验证手机号，若有错误，显示提示并且改变边框颜色
+		$('#conPwd').blur(function(){
+			//密码获取
+			var pwd = $("#password").val();
+			var con = $("#conPwd").val();
+			if(pwd !== con){
+				$('.content_3 .t3').show();
+				$('#conPwd').css({border:'1px solid #ffaa00'})
+				ok3=false;
+			}else{
+				ok3=true;
+			}
+		});
+//				console.log($('.registered').find('span').length)
+		//点击注册
+		$("#regButton").click(function (){	
+			var usn = $('#username').val();
+			var pwd = $("#password").val();
+			var con = $("#conPwd").val();
+			var obj={
+				username:usn,
+				password:pwd						
+			};
+			if(ok1&&ok2&&ok3){
+				$.ajax({
+					type:"post",
+					url:"php/register.php",
+					async:true,
+					data:obj,
+					dataType:'json',
+					success:function(data){
+						if(data.error == 1){
+							alert("注册失败！");
+						}else{
+							alert('注册成功！');
+							window.location.href="login.html";
+						}
+					}
+				});		
+			}
+		});
+	});
+	</script>
+</html>

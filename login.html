@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	</head>
+	<body>
+		<!--Logo部分-->
+		<div id="head">
+			<div class="content_width">
+				<a href="index.html"><img src="img/yao_logo.png"/></a>
+			</div>
+		</div>
+		<!--登录框部分-->
+		<div id="container">
+			<div class="content_width">
+				<div class="log_tt">
+					<span>Hi , 欢迎登录 !</span>
+					<span class="log_tt_r">
+						还不是师大购物网会员？<a href="register.html">免费注册</a>
+					</span>
+				</div>
+				<!--登录-->
+				<div class="registered">
+					<!--输入手机号-->
+					<div class="content_1">
+						<input type="text" name="username" id="username" placeholder="邮箱/手机号/用户名" />
+					</div>
+					<!--输入密码-->
+					<div class="content_2">
+						<input type="text" name="password" id="password" placeholder="登录密码" />
+						<span><a href="haha.html">忘记密码？</a></span>
+					</div>
+					<div class="reg">
+						<label class="checkbox">
+							<input type="checkbox" name="" id="cBox" value="" checked="checked"/>
+							<span>两周内免登录</span>
+						</label>
+						<button id="loginButton">登录</button>
+					</div>
+					<div class="hzFriend">
+						<p>使用合作伙伴帐号登录：</p>
+						<ul>
+							<li class="hz1"><a href="#"></a></li>
+							<li class="hz2"><a href="#"></a></li>
+							<li class="hz3"><a href="#"></a></li>
+							<li class="hz4"><a href="#"></a></li>
+							<li class="hz5"><a href="#"></a></li>
+							<li class="hz6"><a href="#"></a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div id="footer">
+			<div class="content_width">			
+				<p>
+					<a href="#" >关于师大购物</a>|
+					<a href="http://#">互联网药品交易资格证</a>|
+					<a href="#">互联网药品信息服务资格证</a>|
+					
+				</p>
+				<p>
+					<a href="#">连锁营业执照</a>|
+					<a href="#">保健食品卫生许可证</a>|
+					<a href="#" target="_blank">医疗器械许可证</a>|
+					<a href="#"  target="_blank">食品流通许可证</a>|
+					<a href="#"	target="_blank">GSP证书</a>|
+					<a href="#">粤ICP备12015869号</a>
+				</p>
+				<p>
+					Copyright&copy; 1药网 2010-2015， All Rights Reserved
+				</p>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	<!--登陆验证-->
+	<script type="text/javascript">
+	$(function (){
+		$("#loginButton").click(function (){
+			// 获取用户输入的用户名和密码
+			var usn = $('#username').val();
+			var pwd = $("#password").val();		
+			$.ajax({
+				type:"post",
+				url:"php/login_in.php",
+				async:true,
+				data:{
+					username:usn,
+					password:pwd
+				},
+				dataType:'json',
+				success:function(data){
+					if(data.username){
+						window.location.href = "index.html";
+					}else{
+						alert("用户名或密码不匹配， 请确认后重试。");
+					}
+				}
+			});	
+		});
+	});
+</script>
+</html>

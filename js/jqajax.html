@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$.get("data/tese.json",null,function(data,text,xhr){
+					dataReader(data);
+				});
+			});
+			function dataReader(data){
+				console.log(typeof data);
+				console.log(data);
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
