@@ -195,6 +195,7 @@
 
 #alert{display:none;width: 500px;height: 350px;border: 1px solid #0083ce;position: absolute;top: 200px;left: 450px;background: #FFFFFF;z-index: 500;}
 #alert .alert_top{height: 35px;background: #0083CE;line-height: 35px;padding:0 30px 0 40px;font-size: 15px;color: #FFFFFF}
+#alert .alert_top span{color: #FFFFFF;}
 #alert .alert_top a{float: right;color: #99f;}
 #alert .alert_top a:hover{color: #FFFFFF;text-decoration: none;cursor: pointer;}
 #alert .alert_middle{padding: 40px;}
